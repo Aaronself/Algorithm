@@ -1,8 +1,8 @@
 /*
-����˼·��
-������ַ���Ϊ�˱������е����ݣ���һ�¾�����α������е�����
-�����һ�¸���bottom��top�ķ�ʽ��������mid�Ļ����������Ӻͼ���һλ�õ���
-Ȼ��while���ж�����������ʹ�ñ�����������
+解题思路：
+经典二分法，为了遍历所有的数据，记一下具体如何遍历所有的数据
+具体记一下更新bottom和top的方式，都是在mid的基础上再增加和减少一位得到的
+然后while的判断条件，可以使得遍历所有数据
 */
 
 #include <stdio.h>
@@ -16,10 +16,10 @@ typedef int Position;
 typedef struct LNode* List;
 struct LNode {
     ElementType Data[MAXSIZE];
-    Position Last; /* �������Ա������һ��Ԫ�ص�λ�� */
+    Position Last; /* 保存线性表中最后一个元素的位置 */
 };
 
-//List ReadInput(); /* ����ʵ�֣�ϸ�ڲ�����Ԫ�ش��±�1��ʼ�洢 */
+//List ReadInput(); /* 裁判实现，细节不表。元素从下标1开始存储 */
 Position BinarySearch(List L, ElementType X);
 
 int main()
@@ -36,29 +36,24 @@ int main()
     return 0;
 }
 
-/* ��Ĵ��뽫��Ƕ������ */
+/* 你的代码将被嵌在这里 */
 Position BinarySearch(List L, ElementType X)
 {
-    int bottom, top, mid, flag = 0;
+    int bottom, top, mid;
 
     bottom = 1;
     top = L->Last;
     mid = (bottom + top) / 2;
 
-    while (bottom < top)
+    while (bottom <= top)
     {
         if (L->Data[mid] > X)
-            top = mid;
+            top = mid - 1;
         else if (L->Data[mid] < X)
-            bottom = mid;
+            bottom = mid + 1;
         else if (L->Data[mid] == X)
-        {
-            flag = 1;
-
             return mid;
-        }
         mid = (bottom + top) / 2;
     }
-    if (flag == 0)
-        return NotFound;
+    return NotFound;
 }
